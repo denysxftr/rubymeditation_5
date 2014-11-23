@@ -24,6 +24,6 @@ extern {
 
 #[no_mangle]
 pub extern fn Init_librust_module() {
-  let module = unsafe { rb_define_module("RustModule".to_c_str().as_ptr()) }; // create module RackAppRust
-  unsafe { rb_define_singleton_method(module, "test_method".to_c_str().as_ptr(), test_method, 0) }; // 'def self.call(env)' in module RackAppRust
+  let module = unsafe { rb_define_module("RustModule".to_c_str().as_ptr()) };
+  unsafe { rb_define_singleton_method(module, "test_method".to_c_str().as_ptr(), test_method, 0) };
 }
