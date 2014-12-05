@@ -2,22 +2,22 @@
 
 extern crate libc;
 pub use libc::types::os::arch::c95::c_char;
-pub use libc::types::common::c95::c_void;
+pub use libc::types::os::arch::c99::uintptr_t;
 
-extern fn test_method(env: *mut libc::c_void) {
+extern fn test_method(env: libc::uintptr_t) {
   println!("BOOO!!!");
 }
 
 #[link(name = "ruby")]
 extern {
   // define ruby module
-  fn rb_define_module(name: *const libc::c_char) -> *mut libc::c_void;
+  fn rb_define_module(name: *const libc::c_char) -> libc::uintptr_t;
 
   // define singleton method for object
   fn rb_define_singleton_method(
-    klass: *mut libc::c_void,
+    klass: libc::uintptr_t,
     name: *const libc::c_char,
-    callback: extern fn(*mut libc::c_void),
+    callback: extern fn(libc::uintptr_t),
     argc: libc::c_int
   );
 }

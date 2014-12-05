@@ -2,9 +2,9 @@
 
 extern crate libc;
 pub use libc::types::os::arch::c95::{c_char, c_long};
-pub use libc::types::common::c95::c_void;
+pub use libc::types::os::arch::c99::uintptr_t;
 
-extern fn app_controller(env: *mut libc::c_void) -> *mut libc::c_void {
+extern fn app_controller(context: libc::uintptr_t) -> libc::uintptr_t {
   unsafe {
     let response = rb_ary_new(); // response => []
 
@@ -31,30 +31,30 @@ extern fn app_controller(env: *mut libc::c_void) -> *mut libc::c_void {
 #[link(name = "ruby")]
 extern {
   // define ruby module
-  fn rb_define_module(name: *const libc::c_char) -> *mut libc::c_void;
+  fn rb_define_module(name: *const libc::c_char) -> libc::uintptr_t;
 
   // define singleton method for object
   fn rb_define_singleton_method(
-    klass: *mut libc::c_void,
+    klass: libc::uintptr_t,
     name: *const libc::c_char,
-    callback: extern fn(*mut libc::c_void) -> *mut libc::c_void,
+    callback: extern fn(libc::uintptr_t) -> libc::uintptr_t,
     argc: libc::c_int
   );
 
   // create empty array
-  fn rb_ary_new() -> *mut libc::c_void;
+  fn rb_ary_new() -> libc::uintptr_t;
 
   // push value to array
-  fn rb_ary_push(ary: *mut libc::c_void, value: *mut libc::c_void);
+  fn rb_ary_push(ary: libc::uintptr_t, value: libc::uintptr_t);
 
   // create empty hash
-  fn rb_hash_new() -> *mut libc::c_void;
+  fn rb_hash_new() -> libc::uintptr_t;
 
   // create string
-  fn rb_str_new(text: *const libc::c_char, length: libc::c_long) -> *mut libc::c_void;
+  fn rb_str_new(text: *const libc::c_char, length: libc::c_long) -> libc::uintptr_t;
 
   // convert simple int to Fixnum
-  fn rb_int2big(value: int) -> *mut libc::c_void;
+  fn rb_int2big(value: int) -> libc::uintptr_t;
 }
 
 #[no_mangle]
