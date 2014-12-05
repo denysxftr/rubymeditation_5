@@ -59,6 +59,8 @@ extern {
 
 #[no_mangle]
 pub extern fn Init_librack_app_rust() {
-  let module = unsafe { rb_define_module("RackAppRust".to_c_str().as_ptr()) }; // create module RackAppRust
-  unsafe { rb_define_singleton_method(module, "call".to_c_str().as_ptr(), app_controller, 1) }; // 'def self.call(env)' in module RackAppRust
+  unsafe {
+    let module = rb_define_module("RackAppRust".to_c_str().as_ptr()); // create module RackAppRust
+    rb_define_singleton_method(module, "call".to_c_str().as_ptr(), app_controller, 1); // 'def self.call(env)' in module RackAppRust
+  };
 }

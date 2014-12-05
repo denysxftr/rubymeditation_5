@@ -24,6 +24,8 @@ extern {
 
 #[no_mangle]
 pub extern fn Init_librust_module() {
-  let module = unsafe { rb_define_module("RustModule".to_c_str().as_ptr()) };
-  unsafe { rb_define_singleton_method(module, "test_method".to_c_str().as_ptr(), test_method, 0) };
+  unsafe {
+    let module = rb_define_module("RustModule".to_c_str().as_ptr()) };
+    rb_define_singleton_method(module, "test_method".to_c_str().as_ptr(), test_method, 0);
+  };
 }

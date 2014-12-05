@@ -15,7 +15,7 @@ fn fib(number: uint) -> uint {
 extern fn process(context: libc::uintptr_t, input: libc::uintptr_t) -> libc::uintptr_t {
   unsafe {
     let number = rb_num2long(input);
-    // return rb_int2big(34534);
+
     return rb_int2big(fib(number));
   }
 }
@@ -38,6 +38,8 @@ extern {
 
 #[no_mangle]
 pub extern fn Init_librust_fib() {
-  let module = unsafe { rb_define_module("RustImplementation".to_c_str().as_ptr()) };
-  unsafe { rb_define_singleton_method(module, "fib".to_c_str().as_ptr(), process, 1) };
+  unsafe {
+    let module = rb_define_module("RustImplementation".to_c_str().as_ptr());
+    rb_define_singleton_method(module, "fib".to_c_str().as_ptr(), process, 1);
+  };
 }
